@@ -1,3 +1,5 @@
+// Run Buy Drink in 02 with async await keyword
+
 function goMart() {
   console.log("Choose what to buy");
 }

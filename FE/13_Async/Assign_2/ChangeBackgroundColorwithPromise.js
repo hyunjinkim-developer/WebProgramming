@@ -2,7 +2,7 @@ function changeBgColor(color) {
   return new Promise(function (resolve, reject) {
     setTimeout(function () {
       document.querySelector("body").style.backgroundColor = color;
-      console.log("Red");
+      console.log(color);
 
       resolve();
     }, 1000);
