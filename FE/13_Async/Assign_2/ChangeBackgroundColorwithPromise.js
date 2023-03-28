@@ -1,7 +1,7 @@
-function changeBackgroudColor1() {
+function changeBgColor(color) {
   return new Promise(function (resolve, reject) {
     setTimeout(function () {
-      document.querySelector("body").style.backgroundColor = "red";
+      document.querySelector("body").style.backgroundColor = color;
       console.log("Red");
 
       resolve();
@@ -9,74 +9,19 @@ function changeBackgroudColor1() {
   });
 }
 
-function changeBackgroudColor2() {
-  return new Promise(function (resolve, reject) {
-    setTimeout(function () {
-      document.querySelector("body").style.backgroundColor = "orange";
-      console.log("Orange");
-
-      resolve();
-    }, 1000);
-  });
-}
-
-function changeBackgroudColor3() {
-  return new Promise(function (resolve, reject) {
-    setTimeout(function () {
-      document.querySelector("body").style.backgroundColor = "yellow";
-      console.log("Yellow");
-
-      resolve();
-    }, 1000);
-  });
-}
-
-function changeBackgroudColor4() {
-  return new Promise(function (resolve, reject) {
-    setTimeout(function () {
-      document.querySelector("body").style.backgroundColor = "green";
-      console.log("Green");
-
-      resolve();
-    }, 1000);
-  });
-}
-
-function changeBackgroudColor5() {
-  return new Promise(function (resolve, reject) {
-    setTimeout(function () {
-      document.querySelector("body").style.backgroundColor = "blue";
-      console.log("Blue");
-
-      resolve();
-    }, 1000);
-  });
-}
-
-function changeBackgroudColor6() {
-  return new Promise(function (resolve, reject) {
-    setTimeout(function () {
-      document.querySelector("body").style.backgroundColor = "purple";
-      console.log("Purple");
-
-      resolve();
-    }, 1000);
-  });
-}
-
-changeBackgroudColor1()
+changeBgColor("red")
   .then(function () {
-    return changeBackgroudColor2();
+    return changeBgColor("orange");
   })
   .then(function () {
-    return changeBackgroudColor3();
+    return changeBgColor("yellow");
   })
   .then(function () {
-    return changeBackgroudColor4();
+    return changeBgColor("green");
   })
   .then(function () {
-    return changeBackgroudColor5();
+    return changeBgColor("blue");
   })
   .then(function () {
-    return changeBackgroudColor6();
+    return changeBgColor("purple");
   });
