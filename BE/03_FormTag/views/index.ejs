@@ -1,3 +1,6 @@
+<!-- Using form tag on HTML -->
+<!-- Form validation -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -5,9 +8,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Form Tag</title>
+
+    <style>
+      input {
+        width: 200px;
+      }
+    </style>
   </head>
   <body>
     <!-- Send variable from server to front-->
+    <h1>Using form tag on HTML</h1>
     <h1><%= title %></h1>
     <div><%= name %></div>
 
@@ -15,6 +25,7 @@
     <form action="/getForm" name="login1" method="get" class="get-form">
       <input type="text" name="id" placeholder="ID" />
       <input type="password" name="pw" placeholder="PW" />
+
       <button type="submit">Submit</button>
     </form>
 
@@ -37,5 +48,67 @@
       console.log(document.querySelector(".get-form"));
       console.log(document.querySelector(".post-form"));
     </script>
+
+    <hr />
+    <h1>Form Validation</h1>
+
+    <h2>Get request</h2>
+    <form action="/getForm" name="login1" method="get" class="get-form">
+      <input
+        type="text"
+        name="id"
+        placeholder="ID: At least 3 letters"
+        minlength="3"
+        required
+      />
+      <input
+        type="password"
+        name="pw"
+        placeholder="PW: At least 4, At most 8"
+        minlength="4"
+        maxlength="8"
+        required
+      />
+      <input type="email" name="email" placeholder="EMAIL" required />
+      <input type="number" name="grade" placeholder="GRADE" min="1" required />
+      <button type="submit">Submit</button>
+    </form>
+
+    <h1>Regular Expression</h1>
+    <h2>[a-z]: From a to z</h2>
+    <h2>[A-Z]: From A to Z</h2>
+    <h2>[가-힣]: Korean</h2>
+    <h2>[0-9]: From 0 to 9</h2>
+    <h2>All patterns inside ([pattern])</h2>
+    <br />
+
+    <h2>The number of letters: inside {from, to}</h2>
+    <br />
+
+    <h2>Attribute title of input tag: User manual for input</h2>
+    <br />
+
+    <h2>Post request</h2>
+    <form action="/postForm" name="login2" method="post" class="post-form">
+      <!-- id: captial and small letters, Korean, numbers available, At least 4 letters -->
+      <input
+        type="text"
+        name="id"
+        placeholder="ID"
+        pattern="([a-zA-Z0-9가-힣]){4, }"
+        title="Include capital, small letters and numbers. At least 4 letters"
+        required
+      />
+      <!-- pw: small letters, numbers available, At least 8, at most 12 letters-->
+      <input
+        type="password"
+        name="pw"
+        placeholder="PW"
+        pattern="([a-z0-9]){8, 12}"
+        title="Include small letters and numbers. At least 8, at most 12 letters"
+        required
+      />
+      <button type="submit">Submit</button>
+    </form>
   </body>
 </html>
