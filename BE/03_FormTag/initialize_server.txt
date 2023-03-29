@@ -1,0 +1,18 @@
+ // Start project
+ npm init -y
+
+// Install express, ejs package
+ npm install express ejs
+
+// Modify package.json 
+// Organize package.json to figure out project's overall information 
+name, description,
+main : starting file path
+
+
+// Make new file app.js
+touch app.js
+
+// Create .gitignore on root 
+
+// No need to install body-parser after express version 4 (check in package.json)
