@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dynamic Form</title>
+
+    <!-- jQuery 3.x minified CDN for Ajax -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.min.js"
+      integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Aixos CDN -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <style>
+      form,
+      button {
+        font-size: 32px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Practice sending dynamic form</h1>
+
+    <form name="register">
+      <label for="name">Name</label>
+      <input type="text" name="name" id="name" />
+      <br />
+
+      Gender
+      <input type="radio" name="gender" id="male" value="male" />
+      <label for="male">Male</label>
+      <input type="radio" name="gender" id="female" value="female" />
+      <label for="female">Female</label>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+
+      <!-- Button for Ajax -->
+      <button type="button" onclick="ajaxGet()">Ajax GET Submission</button>
+      <button type="button" onclick="ajaxPost()">Ajax POST Submission</button>
+      <br />
+      <br />
+      <!-- Button for Axios -->
+      <button type="button" onclick="axiosGet()">Axios GET Submission</button>
+      <button type="button" onclick="axiosPost()">Axios POST Submission</button>
+      <br />
+      <br />
+      <!-- Button for Fetch -->
+      <button type="button" onclick="fetchGet()">Fetch GET Submission</button>
+      <button type="button" onclick="fetchPost()">Fetch POST Submission</button>
+      <br />
+      <br />
+    </form>
+
+    <div class="result"></div>
+
+    <script>
+      const resultBox = document.querySelector(".result");
+
+      /* Ajax */
+      function ajaxGet() {
+        console.log("Click ajaxGet button");
+
+        // Select form with form's name attirbute
+        const form = document.forms["register"];
+        // Show form element
+        console.dir(form); // All form element
+        console.dir(form.gender); // A form element
+        console.dir(form.gender.value); // A form element's value
+
+        // Object which will send to server
+        const formInfo = {
+          name: form.name.value,
+          gender: form.gender.value,
+        };
+
+        $.ajax({
+          url: "/ajax",
+          type: "GET",
+          data: formInfo,
+          // If client succeed in getting data from the server,
+          // run function below
+          success: function (data) {
+            console.log(data);
+
+            resultBox.textContent = `Complete GET /ajax request! ${data.name} is ${data.gender}.`;
+            resultBox.style.backgroundColor = "red";
+            resultBox.style.color = "white";
+          },
+        });
+      }
+
+      function ajaxPost() {
+        console.log("Click ajaxPost button");
+
+        // Select form with form's name attirbute
+        const form = document.forms["register"];
+
+        // Object which will send to server
+        const formInfo = {
+          name: form.name.value,
+          gender: form.gender.value,
+        };
+
+        console.log(form.gender.value);
+
+        $.ajax({
+          url: "/ajax",
+          type: "POST",
+          data: formInfo,
+          // If client succeed in getting data from the server,
+          // run function below
+          success: function (data) {
+            console.log(data);
+
+            resultBox.textContent = `Complete POST /ajax request! ${data.name} is ${data.gender}.`;
+            resultBox.style.backgroundColor = "orange";
+            resultBox.style.color = "white";
+          },
+        });
+      }
+
+      /* Axios */
+      /* Using Promise */
+      //   function axiosGet() {
+      //     console.log("Click axiosGet button");
+
+      //     const form = document.forms["register"];
+
+      //     const formInfo = {
+      //       name: form.name.value,
+      //       gender: form.gender.value,
+      //     };
+
+      //     /*
+      //       Axios return promise
+      //       so that use then() to get response from the server
+      //     */
+      //     axios({
+      //       url: "/axios",
+      //       method: "GET",
+      //       params: formInfo, // Key for Get request is params
+      //     }).then(function (response) {
+      //         // Get req.query from the client
+      //         console.log(response);
+      //         console.log(response.data);
+
+      //         resultBox.textContent = `Complete GET /axios request! ${response.data.name} is ${response.data.gender}.`;
+      //         resultBox.style.backgroundColor = "yellow";
+      //         resultBox.style.color = "gray";
+      //       })
+      //       .catch(function (error) {
+      //         // Error handling
+      //         console.log("Error!", error);
+      //       });
+      //   }
+
+      /* Using async, await */
+      async function axiosGet() {
+        console.log("Click axiosGet button");
+
+        const form = document.forms["register"];
+
+        const formInfo = {
+          name: form.name.value,
+          gender: form.gender.value,
+        };
+
+        // try {} catch {} for exception handling
+        try {
+          const response = await axios({
+            url: "/axios",
+            method: "GET",
+            params: formInfo, // Key for Get request is params
+          });
+          console.log(response);
+          console.log(response.data);
+
+          resultBox.textContent = `Complete GET /axios request! ${response.data.name} is ${response.data.gender}.`;
+          resultBox.style.backgroundColor = "yellow";
+          resultBox.style.color = "gray";
+        } catch {
+          console.log("Error!", error.message);
+        }
+      }
+
+      function axiosPost() {
+        console.log("Click axiosPost button");
+
+        const form = document.forms["register"];
+
+        const formInfo = {
+          name: form.name.value,
+          gender: form.gender.value,
+        };
+
+        axios({
+          url: "/axios",
+          method: "POST",
+          data: formInfo, // Key for POST request is data
+        })
+          .then((response) => {
+            console.log(response);
+            console.log(response.data);
+
+            resultBox.textContent = `Complete POST /axios request! ${response.data.name} is ${response.data.gender}.`;
+            resultBox.style.backgroundColor = "green";
+            resultBox.style.color = "white";
+          })
+          .catch((error) => {
+            console.log("Error!", error.message);
+            resultBox.textContent = "Error 발생!";
+          });
+      }
+    </script>
+  </body>
+</html>
