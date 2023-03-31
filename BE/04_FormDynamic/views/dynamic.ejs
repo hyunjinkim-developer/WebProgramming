@@ -21,10 +21,15 @@
       button {
         font-size: 32px;
       }
+
+      .result {
+        font-size: 32px;
+        color: blue;
+      }
     </style>
   </head>
   <body>
-    <h1>Practice sending dynamic form</h1>
+    <h1>Practice sending dynamic form with Ajax, Axios, Fetch</h1>
 
     <form name="register">
       <label for="name">Name</label>
@@ -71,6 +76,7 @@
         // Select form with form's name attirbute
         const form = document.forms["register"];
         // Show form element
+        // console.dir() : show contents of child objects
         console.dir(form); // All form element
         console.dir(form.gender); // A form element
         console.dir(form.gender.value); // A form element's value
@@ -217,6 +223,60 @@
           .catch((error) => {
             console.log("Error!", error.message);
             resultBox.textContent = "Error 발생!";
+          });
+      }
+
+      /* Fetch */
+      function fetchGet() {
+        console.log("Click fetchGet button");
+
+        const form = document.forms["register"];
+
+        const urlQuery = `?name=${form.name.value}&gender=${form.gender.value}`;
+        // fetch: Promise based, can use .then()
+        // fetch(url, {options})
+        fetch(`/fetch${urlQuery}`, {
+          method: "GET",
+        })
+          .then(function (response) {
+            console.log(response);
+            return response.json(); // response comming in .json -> parsing into .js object type
+          })
+          .then(function (data) {
+            console.log("js object: ", data);
+
+            resultBox.textContent = `Complete GET /fetch request! ${data.name} is ${data.gender}`;
+          });
+      }
+
+      function fetchPost() {
+        console.log("Click fetchPost button");
+
+        const form = document.forms["register"];
+
+        const formInfo = {
+          name: form.name.value,
+          gender: form.gender.value,
+        }; // type: JS object
+
+        // fetch: Promise based, can use .then()
+        // fetch(url, {options})
+        fetch("/fetch", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            // When sending with POST, use headers option to notify server JSON format is used
+          },
+          body: JSON.stringify(formInfo), // JSON.stringify() : .js object to .json
+        })
+          .then(function (response) {
+            console.log(response);
+            return response.json(); // response comming in .json -> parsing into .js object type
+          })
+          .then(function (data) {
+            console.log("js object; ", data);
+
+            resultBox.textContent = `Complete POST /fetch request! ${data.name} is ${data.gender}`;
           });
       }
     </script>

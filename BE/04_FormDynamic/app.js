@@ -41,7 +41,20 @@ app.get("/axios", (req, res) => {
 app.post("/axios", (req, res) => {
   console.log(req.body); // Sent from client axios, data
 
-  res.send(req.body); // Send to the server
+  res.send(req.body); // sSend to the server
+});
+
+/* Fetch */
+app.get("/fetch", (req, res) => {
+  console.log(req.query);
+
+  res.send(req.query);
+});
+
+app.post("/fetch", (req, res) => {
+  console.log(req.body);
+
+  res.send(req.body);
 });
 
 app.listen(PORT, () => {
