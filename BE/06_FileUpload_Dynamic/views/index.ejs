@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload File Dynamically</title>
+
+    <!-- Axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <style>
+      .profile {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        box-shadow: 0 0 20px #0002; /* x_offset y_offset blur hex_color(3)_alpha(1) */
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Upload file dynamically</h1>
+    <p>Show uploaded image on the page without page reload</p>
+
+    <input type="file" name="dynamic-userfile" id="dynamic-file" /> <br />
+    <button type="button" onclick="fileUpload()">Upload</button> <br />
+    <img class="img-box" src="" alt="" />
+
+    <script>
+      function fileUpload() {
+        console.log("Click upload button");
+
+        /* FormData :
+          dynamically (with no page reload) control data within form tag
+          using with Axios, Ajax etc. */
+        const formData = new FormData();
+        const fileInput = document.getElementById("dynamic-file");
+        console.dir(fileInput);
+        console.dir(fileInput.files);
+        console.dir(fileInput.files[0]);
+
+        // formData.append(key, value);
+        // Insert fileInput.files[0] data into input tag which has name attribute "dynamic-userfile"
+        formData.append("dynamic-userfile", fileInput.files[0]);
+
+        axios({
+          url: "/dynamicFile",
+          method: "POST",
+          data: formData,
+          headers: {
+            "Content-Type": "multipart/form-data", // enctype="multipart/form-data
+          },
+        }).then((response) => {
+          console.log(response);
+          console.dir(response.data);
+          console.dir(response.data.path);
+
+          const imgEl = document.querySelector(".img-box");
+          imgEl.src = `/${response.data.path}`;
+          imgEl.classList.add("profile"); // Add css style class
+        });
+      }
+    </script>
+  </body>
+</html>
