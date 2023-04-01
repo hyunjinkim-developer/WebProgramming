@@ -1,3 +1,6 @@
+/* multer official ref:
+  https://github.com/expressjs/multer/blob/master/README.md */
+
 const express = require("express");
 const app = express();
 const PORT = 8000;
