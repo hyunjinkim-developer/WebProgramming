@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload Result</title>
+
+    <link rel="stylesheet" href="/static/css/result.css" />
+  </head>
+  <body>
+    <div class="card">
+      <div class="profile-image">
+        <img src="/<%= imgSrc %>" alt="profile-img" class="profile-image"/>
+      </div>
+      <ul class="card-content">
+          <h3 class="greetings"><%= `${userInfo.id}님 환영합니다!` %></h3>
+          <br>
+          <li class="password">비밀번호: <%= userInfo.password %></li>
+          <li class="name">이름: <%= userInfo.name %></li>
+          <li class="age">나이: <%= userInfo.age %></li>
+    </div>
+  </body>
+</html>
