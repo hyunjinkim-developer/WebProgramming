@@ -7,14 +7,44 @@
     <title>Upload files using Multer</title>
   </head>
   <body>
-    <h1>Let's upload files</h1>
+    <h1>Let's upload files with multer</h1>
 
+    <!-- multer -->
     <!-- multer only works with multi-part data (image, video, file)-->
     <!-- Add enctype="multipart/form-data -->
+
+    <h2>One input tag, upload one file</h2>
     <form action="/upload" method="POST" enctype="multipart/form-data">
       <input type="file" name="userfile" /> <br />
       <input type="text" name="title" /> <br />
+      <br />
       <button type="submit">Upload!</button>
+    </form>
+    <br />
+    <hr />
+
+    <h2>One input tag, upload several files</h2>
+    <form action="/upload/array" method="POST" enctype="multipart/form-data">
+      <!-- Upload several files : type="file" multiple -->
+      <input type="file" name="userfile" multiple /> <br />
+      <input type="text" name="title" /> <br />
+      <br />
+      <button type="submit">Upload several files!</button>
+    </form>
+    <br />
+    <hr />
+
+    <h2>Several input tags, upload several files</h2>
+    <form action="/upload/fields" method="POST" enctype="multipart/form-data">
+      <input type="file" name="userfile1" multiple /> <br />
+      <input type="text" name="title1" /> <br />
+      <br />
+      <input type="file" name="userfile2" /> <br />
+      <input type="text" name="title2" /> <br />
+      <br />
+      <button type="submit">
+        Upload several files with several input tags
+      </button>
     </form>
   </body>
 </html>

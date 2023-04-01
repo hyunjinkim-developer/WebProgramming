@@ -5,6 +5,21 @@ const express = require("express");
 const app = express();
 const PORT = 8000;
 
+// // Remove all files in /uploads
+// import fsPromises from "fs/promises";
+
+// // for CommonJS, use this:
+// // const fsPromises = require("fs/promises");
+
+// const deleteFile = async (filePath) => {
+//   try {
+//     await fsPromises.unlink(filePath);
+//     console.log("Successfully removed file!");
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+
 // Using multer
 const multer = require("multer");
 const path = require("path"); // Built-in modules(no need to import), make easier to set file path
@@ -49,8 +64,9 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-/* single("[FILE_NAME]") : Upload one file */
-// <input type="file" name="[FILE_NAME]" />
+/* single("[FILE_NAME]") : Upload one file
+  <input type="file" name="[FILE_NAME]" /> */
+// when setting file destination with upload variable above
 // app.post("/upload", upload.single("userfile"), (req, res) => {
 app.post("/upload", uploadDetail.single("userfile"), (req, res) => {
   console.log(req.file); // Information of uploaded file
@@ -70,6 +86,28 @@ app.post("/upload", uploadDetail.single("userfile"), (req, res) => {
 
   res.send("Upload Succeed!");
 });
+
+/* array("[FILE_NAME"]) : Upload several files
+  <input type="file" name="[FILE_NAME]" /> */
+app.post("/upload/array", uploadDetail.array("userfile"), (req, res) => {
+  console.log(req.files);
+  console.log(req.body);
+
+  res.send("Upload several files succeed!");
+});
+
+/* fileds("[FILE_NAME]") : Upload serveral files with several input tags
+<input type="file" name="[FILE_NAME]" /> */
+app.post(
+  "/upload/fields",
+  uploadDetail.fields([{ name: "userfile1" }, { name: "userfile2" }]),
+  (req, res) => {
+    console.log(req.files);
+    // { userfile1: [{}, {}, ... ], userfile2: [{}] }
+    console.log(req.body);
+    // { title1: "TITLE1", titile2: "TITLE2" }
+  }
+);
 
 app.listen(PORT, () => {
   console.log(`https://localhost:${PORT}`);
