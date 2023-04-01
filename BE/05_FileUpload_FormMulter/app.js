@@ -5,21 +5,6 @@ const express = require("express");
 const app = express();
 const PORT = 8000;
 
-// // Remove all files in /uploads
-// import fsPromises from "fs/promises";
-
-// // for CommonJS, use this:
-// // const fsPromises = require("fs/promises");
-
-// const deleteFile = async (filePath) => {
-//   try {
-//     await fsPromises.unlink(filePath);
-//     console.log("Successfully removed file!");
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
-
 // Using multer
 const multer = require("multer");
 const path = require("path"); // Built-in modules(no need to import), make easier to set file path
