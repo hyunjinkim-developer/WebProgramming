@@ -16,6 +16,7 @@ touch app.js
 /node_modules
 package-lock.json
 
-// Set static, views directories
+// Set directories
+mkdir controller model routes static views 
 
 // No need to install body-parser after express version 4 (check in package.json)
