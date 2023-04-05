@@ -49,75 +49,6 @@
     <div class="login-result"></div>
 
     <script>
-      const registerResult = document.querySelector(".register-result");
-
-      /* Register */
-      /* Using Promise */
-      /* function clickRegister() {
-              const registerForm = document.forms["register"];
-
-              console.dir(registerForm);
-
-              const registerInfo = {
-                name: registerForm.name.value,
-                gender: registerForm.gender.value,
-                birthDate: {
-                  birthYear: registerForm.year.value,
-                  birthMonth: registerForm.month.value,
-                  birthDate: registerForm.day.value,
-                },
-                interest: {
-                  travel: registerForm.travel.value,
-                  fashion: registerForm.fashion.value,
-                  food: registerForm.food.vaule,
-                },
-              };
-
-              axios({
-                url: "/register",
-                method: "GET",
-                params: registerInfo,
-              }).then(function (response) {
-                console.log(response);
-                console.log(response.data);
-
-                registerResult.textContent = `${response.data.name}님 환영합니다! 가입이 완료되었습니다.`;
-                registerResult.classList.add("success");
-              });
-            } */
-
-      /* async await */
-      async function clickRegister() {
-        const registerForm = document.forms["register"];
-
-        console.dir(registerForm);
-
-        const registerInfo = {
-          name: registerForm.name.value,
-          gender: registerForm.gender.value,
-          birthDate: {
-            birthYear: registerForm.year.value,
-            birthMonth: registerForm.month.value,
-            birthDate: registerForm.day.value,
-          },
-          interest: {
-            travel: registerForm.travel.value,
-            fashion: registerForm.fashion.value,
-            food: registerForm.food.vaule,
-          },
-        };
-
-        const response = await axios({
-          url: "/register",
-          method: "GET",
-          params: registerInfo,
-        });
-        console.log(response);
-        console.log(response.data);
-        registerResult.textContent = `${response.data.name}님 환영합니다! 가입이 완료되었습니다.`;
-        registerResult.classList.add("success");
-      }
-
       /* Login */
       const loginResult = document.querySelector(".login-result");
 
@@ -126,8 +57,8 @@
         console.dir(logInForm);
 
         const logInInfo = {
-          id: logInForm.userId.value,
-          pw: logInForm.userPw.value,
+          userId: logInForm.userId.value,
+          userPw: logInForm.userPw.value,
         };
 
         axios({
@@ -141,9 +72,9 @@
           if (response.data.loginSuccess) {
             // Login success
             // Assignment 1
-            // loginResult.textContent = `${response.data.loginInfo.id}님! 로그인 성공😁`;
+            // loginResult.textContent = `${response.data.loginInfo.userId}님! 로그인 성공😁`;
             // Assignment 2
-            loginResult.textContent = `${response.data.loginInfo}님! 로그인 성공😁`;
+            loginResult.textContent = `${response.data.userInfo.name}님! 로그인 성공😁`;
 
             loginResult.classList.remove("failure");
             loginResult.classList.add("success");

@@ -8,8 +8,8 @@ app.use("/static", express.static(__dirname + "/static"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const indexRouter = require("./routes");
-app.use("/", indexRouter);
+const userRouter = require("./routes/user");
+app.use("/", userRouter);
 
 app.get("*", (req, res) => {
   res.render("404");
