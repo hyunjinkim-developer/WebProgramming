@@ -5,6 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Visitor Page</title>
+
+    <!-- Axios CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
   </head>
   <body>
     <form name="visitor-form">
@@ -13,7 +16,7 @@
         <input type="text" id="name" placeholder="User Name" /> <br />
         <input type="text" id="comment" placeholder="Comment" /> <br />
         <div id="button-group">
-          <button type="button">Create</button>
+          <button type="button" onclick="createVisitor();">Create</button>
         </div>
       </fieldset>
     </form>
@@ -38,5 +41,39 @@
         <% }%>
       </tbody>
     </table>
+
+    <script>
+      const tbody = document.querySelector("tbody");
+
+      // When button is clicked, Add data in the table
+      function createVisitor() {
+        const form = document.forms["visitor-form"];
+
+        axios({
+          method: "POST",
+          url: "/visitor/write",
+          data: {
+            name: form.name.value,
+            comment: form.comment.value,
+          },
+        }).then((res) => {
+          console.log(res.data); // { id: n, name: "xx", comment: "yy"}
+
+          const newVisitor = `
+          <tr id="tr_${res.data.id}">
+            <td>${res.data.id}</td>
+            <td>${res.data.name}</td>
+            <td>${res.data.comment}</td>
+            <td><button type="button">Update</button></td>
+            <td><button type="button">Delete</button></td>
+          </tr>
+          `;
+
+          // Element.insertAdjacentHTML(): inserts the resulting nodes into the DOM tree
+          // cf. Element.innerHTML(): replace the contents of an element
+          tbody.insertAdjacentHTML("beforeend", newVisitor);
+        });
+      }
+    </script>
   </body>
 </html>
