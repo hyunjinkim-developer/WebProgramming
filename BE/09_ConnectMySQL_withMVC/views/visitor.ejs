@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visitor Page</title>
+  </head>
+  <body>
+    <form name="visitor-form">
+      <fieldset>
+        <legend>Add Comments</legend>
+        <input type="text" id="name" placeholder="User Name" /> <br />
+        <input type="text" id="comment" placeholder="Comment" /> <br />
+        <div id="button-group">
+          <button type="button">Create</button>
+        </div>
+      </fieldset>
+    </form>
+    <table border="1" cellspacing="0">
+      <thead>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Comment</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </thead>
+
+      <tbody>
+        <% for (let i = 0; i < data.length; ++i) { %>
+        <tr id="tr_<%= data[i].id %>">
+          <td><%= data[i].id %></td>
+          <td><%= data[i].name %></td>
+          <td><%= data[i].comment %></td>
+          <td><button type="button">Update</button></td>
+          <td><button type="button">Delete</button></td>
+        </tr>
+        <% }%>
+      </tbody>
+    </table>
+  </body>
+</html>

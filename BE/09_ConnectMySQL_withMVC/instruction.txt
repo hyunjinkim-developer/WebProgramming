@@ -1,0 +1,2 @@
+// Install MySQL (if not working add sudo in front)
+npm install mysql

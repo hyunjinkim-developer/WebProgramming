@@ -20,3 +20,6 @@ package-lock.json
 mkdir controller model routes static views 
 
 // No need to install body-parser after express version 4 (check in package.json)
+
+// Install MySQL Driver
+sudo npm install mysql
