@@ -1,2 +1,2 @@
-// Install MySQL (if not working add sudo in front)
-npm install mysql
+// Install Sequelize and dependencies
+npm install sequelize sequelize-cli mysql2
