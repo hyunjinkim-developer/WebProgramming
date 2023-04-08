@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visitor Page</title>
+
+    <!-- Axios CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <form name="visitor-form">
+      <fieldset>
+        <legend>Add Comments</legend>
+        <input type="text" id="name" placeholder="User Name" /> <br />
+        <input type="text" id="comment" placeholder="Comment" /> <br />
+        <div id="button-group">
+          <button type="button" onclick="createVisitor();">Create</button>
+        </div>
+      </fieldset>
+    </form>
+    <table border="1" cellspacing="0">
+      <thead>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Comment</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </thead>
+
+      <tbody>
+        <% for (let i = 0; i < data.length; ++i) { %>
+        <tr id="tr_<%= data[i].id %>">
+          <td><%= data[i].id %></td>
+          <td><%= data[i].name %></td>
+          <td><%= data[i].comment %></td>
+          <td>
+            <button type="button" onclick="editVisitor('<%= data[i].id %>')">
+              Edit
+            </button>
+          </td>
+          <td>
+            <button
+              type="button"
+              onclick="deleteVisitor(this, '<%= data[i].id %>');"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+        <% }%>
+      </tbody>
+    </table>
+
+    <script>
+      const tbody = document.queryelector("tbody");
+      const buttonGroup = document.querySelector("#button-group");
+
+      // When button is clicked, Add data in the table
+      function createVisitor() {
+        const form = document.forms["visitor-form"];
+
+        axios({
+          method: "POST",
+          url: "/visitor/write",
+          data: {
+            name: form.name.value,
+            comment: form.comment.value,
+          },
+        }).then((res) => {
+          // console.log(res.data); // { id: n, name: "xx", comment: "yy"}
+
+          const newVisitor = `
+          <tr id="tr_${res.data.id}">
+            <td>${res.data.id}</td>
+            <td>${res.data.name}</td>
+            <td>${res.data.comment}</td>
+            <td><button type="button" onclick="editVisitor(${res.data.id})">Edit</button></td>
+            <td><button type="button" onclick="deleteVisitor(this, ${res.data.id});">Delete</button></td>
+          </tr>
+          `;
+
+          // Element.insertAdjacentHTML(): inserts the resulting nodes into the DOM tree
+          // cf. Element.innerHTML(): replace the contents of an element
+          tbody.insertAdjacentHTML("beforeend", newVisitor);
+        });
+      }
+
+      // When button is clicked,
+      // put form data into input tag,
+      // show Edit, Cancel button
+      function editVisitor(id) {
+        console.log(id);
+
+        axios({
+          method: "GET",
+          url: "/visitor/get",
+          params: {
+            id: id,
+          },
+        }).then((res) => {
+          console.log(res.data);
+
+          // Put form data into input tag
+          const form = document.forms["visitor-form"];
+          form.name.value = res.data.name; // Set value of input[name='name']
+          form.comment.value = res.data.comment; // Set value of input[name='comment']
+
+          // Show Edit, Cancel button
+          const btns = `
+            <button type="button" onclick="editDo(${id})">Edit</button>
+            <button type="button" onclick="editCancel()">Cancel</button>
+          `;
+          buttonGroup.innerHTML = btns;
+        });
+      }
+      // When Edit button is clicked,
+      // edit data in input tag
+      async function editDo(id) {
+        const form = document.forms["visitor-form"];
+
+        // Edit data
+        await axios({
+          method: "PATCH",
+          url: "/visitor/edit",
+          data: {
+            id: id,
+            name: form.name.value,
+            comment: form.comment.value,
+          },
+        }).then((res) => {
+          console.log(res.data);
+
+          // Alert edit Succeed
+          alert(res.data);
+
+          // Apply edited data on client
+          const children = document.querySelector(`#tr_${id}`).children;
+          console.log(children);
+          children[1].textContent = form.name.value;
+          children[2].textContent = form.comment.value;
+        });
+
+        // Initialize input tag
+        editCancel();
+      }
+      // When Cancel button is clicked,
+      // initialize input tag
+      // show Create button
+      function editCancel() {
+        // Initialize input tag
+        const form = document.forms["visitor-form"];
+        form.name.value = "";
+        form.comment.value = "";
+
+        // Show Create button
+        const btn = `<button type="button" onclick="createVisitor();">Create</button>`;
+        buttonGroup.innerHTML = btn;
+      }
+
+      function deleteVisitor(obj, id) {
+        // console.log("obj", obj);
+        // console.log("id", id);
+
+        // confirm() : pop-up window with "Ok" and "Cancel" button
+        // "Ok" returns true
+        // "Cancel" returns false
+        // Cancel button clicked
+        if (!confirm("Are you really want to delete this datum?")) {
+          return;
+        }
+        // Ok button clicked
+        axios({
+          method: "DELETE",
+          url: "/visitor/delete",
+          data: {
+            id: id,
+          },
+        }).then((res) => {
+          // console.log(res);
+
+          /* Method 1: remove current element's parent, parent */
+          // obj.parentElement.parentElement.remove();
+
+          /* Method 2: remove closest element with same id */
+          obj.closest(`#tr_${id}`).remove();
+
+          /* Method 3: find element using id */
+          // document.getElementById(`tr_${id}`).remove();
+        });
+      }
+    </script>
+  </body>
+</html>
