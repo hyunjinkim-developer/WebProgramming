@@ -1,2 +1,14 @@
 // Install Sequelize and dependencies
 npm install sequelize sequelize-cli mysql2
+
+// Create an empty project you will need to execute init command
+npx sequelize init
+
+// Remove migration, seeders directory
+
+// Edit /config/config.json
+// "dialect": "[DBMS_name]"
+
+// Edit /models/index.js
+
+//  Edit Cvisitor.js, const model

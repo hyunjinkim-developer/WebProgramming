@@ -54,7 +54,7 @@
     </table>
 
     <script>
-      const tbody = document.queryelector("tbody");
+      const tbody = document.querySelector("tbody");
       const buttonGroup = document.querySelector("#button-group");
 
       // When button is clicked, Add data in the table
@@ -91,7 +91,7 @@
       // put form data into input tag,
       // show Edit, Cancel button
       function editVisitor(id) {
-        console.log(id);
+        // console.log(id);
 
         axios({
           method: "GET",
@@ -100,7 +100,7 @@
             id: id,
           },
         }).then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
 
           // Put form data into input tag
           const form = document.forms["visitor-form"];
@@ -130,14 +130,14 @@
             comment: form.comment.value,
           },
         }).then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
 
           // Alert edit Succeed
           alert(res.data);
 
           // Apply edited data on client
           const children = document.querySelector(`#tr_${id}`).children;
-          console.log(children);
+          // console.log(children);
           children[1].textContent = form.name.value;
           children[2].textContent = form.comment.value;
         });
