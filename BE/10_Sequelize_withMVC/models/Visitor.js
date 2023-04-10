@@ -1,6 +1,5 @@
-// Define visitor model structure
+// Define Visitor model structure
 // Connect with sequelize mode and mySQL tables
-
 const Visitor = function (Sequelize, DataTypes) {
   // Sequelize: sequelize in models/index.js
   // DataTypes: Sequeilize in models/index.js

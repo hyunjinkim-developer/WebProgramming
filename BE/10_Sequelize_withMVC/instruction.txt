@@ -11,4 +11,4 @@ npx sequelize init
 
 // Edit /models/index.js
 
-//  Edit Cvisitor.js, const model
+// Edit Cvisitor.js, add const model
