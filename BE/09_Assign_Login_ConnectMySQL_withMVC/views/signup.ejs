@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <%- include('include/include', { title: 'SignUp' })%>
+  <body>
+    <h1>회원가입</h1>
+    <form name="form_register">
+      <label for="userid">ID</label>
+      <input id="userid" type="text" name="userid" required /><br />
+      <label for="password">Password</label>
+      <input id="password" type="password" name="pw" required /><br />
+      <label for="nickname">Name </label>
+      <input id="nickname" type="text" name="name" required /><br />
+      <button type="button" onclick="register();">Register</button>
+    </form>
+    <a href="/user/signin">Login</a>
+
+    <script>
+      /* When Registor button clicked,
+         Request the server for signup */
+
+      // POST /user/signup
+      // /* resgister() with async awiat */
+      // async function register() {
+      //   const form = document.forms["form_register"];
+
+      //   /* Handle when any of input tag is null:
+      //     Beforehand set form's userid, pw, name as required */
+      //   // Form.checkValidity(): If any of input tag with required attribute is null, return false
+      //   if (!form.checkValidity()) {
+      //     form.reportValidity(); // Report to client
+      //     return;
+      //   }
+
+      //   // Use keyword await: wait for server to respond
+      //   const response = await axios({
+      //     method: "POST",
+      //     url: "/user/signup",
+      //     data: {
+      //       userid: form.userid.value,
+      //       pw: form.pw.value,
+      //       name: form.name.value,
+      //     },
+      //   });
+      //   if (response.data) {
+      //     // Alert
+      //     alert("Succeed Signing Up!");
+      //     // Load login page
+      //     document.location.href = "/user/signin";
+      //   } else {
+      //     alert("Something wrong in DB while signing up");
+      //   }
+      // }
+
+      /* resgistr() with Promise .then() */
+      function register() {
+        const form = document.forms["form_register"];
+
+        /* Handle when any of input tag is null:
+          Beforehand set form's userid, pw, name as required */
+        // Form.checkValidity(): If any of input tag with required attribute is null, return false
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        axios({
+          method: "POST",
+          url: "/user/signup",
+          data: {
+            userid: form.userid.value,
+            pw: form.pw.value,
+            name: form.name.value,
+          },
+        }).then((res) => {
+          if (res.data) {
+            // Alert
+            alert("Succeed Signing Up!");
+            // Load login page
+            document.location.href = "/user/signin";
+          } else {
+            alert("Something wrong in DB while signing up");
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
