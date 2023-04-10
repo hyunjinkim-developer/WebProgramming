@@ -1,0 +1,12 @@
+// Start project
+npm init -y
+
+// Install express, ejs package
+// If not working, add sudo in front
+npm install express ejs
+
+
+// Install cookie parser
+npm install cookie-parser
+
+// Import cooke-parser in main of server(cookie.js)
