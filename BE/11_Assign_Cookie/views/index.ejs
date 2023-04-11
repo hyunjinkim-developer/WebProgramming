@@ -1,0 +1,124 @@
+<!-- Bootstrap Modal 
+        Ref: https://getbootstrap.com/docs/5.2/components/modal/#passing-options -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test cookie with pop up window</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <!-- Bootstrap CDN -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+      integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+      integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Axios CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+  </head>
+
+  <body>
+    <h1>Test cookie with pop up window</h1>
+    <p>
+      페이지 접속했을 때 위와 같은 창 보이게 하고, “오늘 그만 보기” 선택한 후
+      “닫기” 하면 브라우저를 껐다 켜도 창이 보이지 않게 하기
+    </p>
+    <p>
+      개발자도구 > Application > Storage > Cookies > 주소 클릭 후 쿠키를
+      삭제했다면 브라우저 새로고침시 alert 창이 나타나야 함!
+    </p>
+
+    <!-- Modal -->
+    <!-- https://getbootstrap.com/docs/5.3/components/modal/#modal-components -->
+    <div
+      class="modal fade"
+      id="cookieModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Test Cookie</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">Pop up window</div>
+
+          <div class="text-end">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="cookieCheckbox"
+            />
+            <label class="form-check-label" for="cookieCheckbox">
+              Do not show again today
+            </label>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              onclick="closePopup();"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const cookieModal = new bootstrap.Modal("#cookieModal");
+      const checkBox = document.getElementById("cookieCheckbox");
+
+      axios({
+        method: "POST",
+        url: "/",
+      }).then((res) => {
+        if (!res.data) {
+          cookieModal.show();
+        }
+      });
+
+      function closePopup() {
+        /* <input type="checkbox" />
+          If checked, [Element].checked returns true
+          otherwise, [Element].checked returns false
+          */
+        const checked = checkBox.checked;
+        if (checked) {
+          axios({
+            method: "POST",
+            url: "/setCookie",
+            data: {
+              checked: checked,
+            },
+          });
+        }
+
+        cookieModal.hide();
+      }
+    </script>
+  </body>
+</html>
