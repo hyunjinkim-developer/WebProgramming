@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <%- include('include/include', { title: '회원 정보' })%>
+  <body>
+    <h1>회원 정보</h1>
+    <a href="/">HOME</a>
+    <p>ID 수정 불가능, Password, Name 수정 가능</p>
+
+    <!-- Set every value of input tag in form_profile 
+          with data that user who just logged in from the server -->
+    <form name="form_profile">
+      <!-- Not showing this part -->
+      <label for="userid">ID</label>
+      <input type="hidden" id="id" value="<%= data.id %>" />
+      <!-- readonly: Cannot edit userid -->
+      <input
+        id="userid"
+        type="text"
+        name="userid"
+        value="<%= data.userid %>"
+        readonly
+      /><br />
+      <label for="password">Password</label>
+      <input
+        id="password"
+        type="password"
+        name="pw"
+        value="<%= data.pw %>"
+        required
+      /><br />
+      <label for="name">Name</label>
+      <input
+        id="name"
+        type="text"
+        name="name"
+        value="<%= data.name %>"
+        required
+      /><br />
+      <button type="button" onclick="profileEdit();">Edit</button>
+      <button type="button" onclick="profileDelete();">Delete</button>
+    </form>
+
+    <script>
+      /* When Edit button clicked,
+          Request the server to edit user information */
+      const form = document.forms["form_profile"];
+
+      // POST /user/profile/edit
+      async function profileEdit() {
+        /* Handle when any of input tag is null:
+          Beforehand set form's pw, name, name as required */
+        // Form.checkValidity(): If any of input tag with required attribute is null, return false
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        await axios({
+          method: "POST",
+          url: "/user/profile/edit",
+          data: {
+            id: form.id.value,
+            userid: form.userid.value,
+            pw: form.pw.value,
+            name: form.name.value,
+          },
+        });
+        // Nothing to get back from server to client
+
+        alert("Succeed Editing User Profile!");
+      }
+
+      /* When Delete button clicked,
+          Request the server to delete user information */
+      // POST /user/profile/delete
+      async function profileDelete() {
+        await axios({
+          method: "POST",
+          url: "/user/profile/delete",
+          data: {
+            id: form.id.value,
+          },
+        });
+        // Nothing to get back from server to client
+
+        alert("Succeed Deleting User Profile!");
+        document.location.href = "/"; //
+      }
+    </script>
+  </body>
+</html>

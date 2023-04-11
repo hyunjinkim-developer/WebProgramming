@@ -1,0 +1,26 @@
+* Sequelize setting
+    * Define model structure
+        * /models/User.js define user table
+        */models/Visitor.js define visitor table
+    * Sequelize module setting,
+        add visitor table, user table, sequelize object in db object
+
+* Routes setting
+    * Seperate router:
+        /routes/index.js /routes/user.js r/outes/visitor.js
+    * Set default path for each router in /app.js
+        // Separate routes from comments to sign up && sign in
+        const indexRouter = require("./routes"); // Routes for comments
+        app.use("/", indexRouter); // IP:PORT/
+
+        const visitorRouter = require("./routes/visitor");
+        app.use("/visitor", visitorRouter); // IP:PORT/visitor
+
+        const userRouter = require("./routes/user"); // Routes for sign up and sign in
+        app.use("/user", userRouter); // IP:PORT/user
+
+* Use Sequlize instead of SQL qeuries
+    in /controller/Cuser.js /controller/Cvisitor.js
+    * Use async, await or Promise, .then() to wait for sequelize to finish
+
+* Tables and columns name in MySQL queries is case-INsenitive in MacOS

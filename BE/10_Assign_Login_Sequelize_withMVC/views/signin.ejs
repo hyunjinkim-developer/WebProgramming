@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <%- include('include/include', { title: 'SignIn' })%>
+  <body>
+    <h1>로그인</h1>
+    <!-- 
+      Why do I need this form?
+      When Login Button is clicked, 
+      change page to /user/profile 
+      and send the user data to the page
+      How? -> To send userid data to the /user/profile page, 
+      use form_info form and set input tag's value as userid
+      (Set "type=hidden" so that this form not showing on the page)
+      When form_info form submit by sumbit() method, 
+      Client send POST /user/profile to the server as set in action="/user/profile" method="POST", 
+    -->
+    <form name="form_info" action="/user/profile" method="POST">
+      <input type="hidden" name="userid" />
+      <input type="hidden" name="pw" />
+    </form>
+
+    <form name="form_login">
+      <label for="userid">ID</label>
+      <input id="userid" type="text" name="userid" required /><br />
+      <label for="password">Password</label>
+      <input id="password" type="password" name="pw" required /><br />
+      <button type="button" onclick="login();">Login</button>
+    </form>
+
+    <a href="/user/signup">Register</a>
+
+    <script>
+      /* When Login button clicked,
+        request the server for signin */
+
+      // POST /user/signin
+      // /* login() async await */
+      // async function login() {
+      //   const form = document.forms["form_login"];
+
+      //   /* Handle when any of input tag is null:
+      //       Beforehand set form's userid, pw as required */
+      //   // Form.checkValidity(): If any of input tag with required attribute is null, return false
+      //   if (!form.checkValidity()) {
+      //     form.reportValidity(); // Report to client
+      //     return;
+      //   }
+
+      //   const response = await axios({
+      //     method: "POST",
+      //     url: "/user/signin",
+      //     data: {
+      //       userid: form.userid.value,
+      //       pw: form.pw.value,
+      //     },
+      //   });
+      //   if (response.data) {
+      //     // Login succeed
+      //     // true from the server
+      //
+      //     // Show alert
+      //     alert("Succeed Logging in!");
+
+      //     // Submit form
+      //     const form_info = document.forms["form_info"];
+      //     form_info.userid.value = form.userid.value; // Add value in input tag named as userid in form
+      //     /* form_info.submit() :
+      //      the same as <button type="submit"></button>
+      //      because of form_info's attribute action="/user/profile" method="POST",
+      //      available to run request, POST /user/profile
+      //      */
+      //     form_info.submit();
+      //   } else {
+      //     // Login failed
+      //     // false from the server
+      //
+      //     alert("Failed Logging in!");
+      //     form.reset(); // Initialize form, and do not submit
+      //   }
+      // }
+
+      /* login() with Promise .then() */
+      function login() {
+        const form = document.forms["form_login"];
+
+        axios({
+          method: "POST",
+          url: "/user/signin",
+          data: {
+            userid: form.userid.value,
+            pw: form.pw.value,
+          },
+        }).then((res) => {
+          // result.data : true or false
+          if (res.data) {
+            // Login succeed
+            // false from the server
+
+            // Show alert
+            alert("Succeed Logging in!");
+
+            // Submit form
+            const form_info = document.forms["form_info"];
+            form_info.userid.value = form.userid.value; // Add value in input tag named as userid in form
+            form_info.pw.value = form.pw.value;
+            /* form_info.submit() :
+                the same as <button type="submit"></button>
+                because of form_info's attribute action="/user/profile" method="POST",
+                available to run request, POST /user/profile
+            */
+            form_info.submit();
+          } else {
+            // Login failed
+            // false from the server
+
+            alert("Failed Logging in!");
+            form.reset(); // Initialize form
+            // Do not submit the form
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
