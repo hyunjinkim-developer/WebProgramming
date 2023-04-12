@@ -1,0 +1,5 @@
+// Add Socket.IO CDN on client
+Ref: https://socket.io/docs/v4/client-installation
+
+// Install Socket.IO on the server
+npm install socket.io
