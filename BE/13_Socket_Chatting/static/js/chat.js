@@ -59,6 +59,8 @@ socket.on("updateNicknames", (objNick) => {
 function sendMsg() {
   const data = {
     nickname: myNickname,
+    // Set receiver of DM, a option selected from select tag
+    dm: document.querySelector("#nick-list").value,
     msg: document.querySelector("#message").value,
   };
   socket.emit("send", data);
@@ -68,21 +70,30 @@ function sendMsg() {
 
 socket.on("newMessage", (data) => {
   console.log("New message from server", data);
+  // DM: { nickname: "", dm: "(속닥속닥)", msg: ""}
+  // to all: { nickname: "", msg: ""}
 
   let chatList = document.querySelector("#chat-list");
+  let div = document.createElement("div");
+  let divMsg = document.createElement("div");
   if (data.nickname === myNickname) {
-    let div = document.createElement("div");
-    div.setAttribute("class", "my-chat");
-    let divMsg = document.createElement("div");
-    divMsg.innerText = `${data.nickname}: ${data.msg}`;
-    div.appendChild(divMsg);
-    chatList.appendChild(div);
+    div.classList.add("my-chat"); // Same as right below
+    // div.setAttribute("class", "my-chat");
   } else {
-    let div = document.createElement("div");
-    div.setAttribute("class", "other-chat");
-    let divMsg = document.createElement("div");
-    divMsg.innerText = `${data.nickname}: ${data.msg}`;
-    div.appendChild(divMsg);
-    chatList.appendChild(div);
+    div.classList.add("other-chat"); // Same as right below
+    // div.setAttribute("class", "other-chat");
   }
+
+  // DM
+  if (data.dm) {
+    div.classList.add("secret-chat");
+    divMsg.textContent = data.dm;
+  }
+  // Sent to all && DM
+  divMsg.textContent += `${data.nickname}: ${data.msg}`;
+  div.append(divMsg);
+  chatList.append(div);
+
+  // Set scroll at the bottom so that new message shows without scrolling
+  chatList.scrollTop = chatList.scrollHeight;
 });

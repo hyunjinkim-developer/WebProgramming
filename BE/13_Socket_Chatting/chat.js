@@ -71,12 +71,29 @@ io.on("connection", (socket) => {
 
   /* Get message sent by clients */
   socket.on("send", (obj) => {
-    // obj : { nickname: "", msg: "" }
-    // Send every client message
-    io.emit("newMessage", obj);
+    // obj : { nickname: "", dm: "", msg: "" }
+    // dm: "all" -> Send all client message get from the client
+    // dm: "[socket.id]" -> Send to specific client
 
-    // const data = { nickname: obj.nickname, msg: obj.msg };
-    // io.emit("newMessage", data);
+    if (obj.dm !== "all") {
+      /* Direct message */
+      // data : { nickname: "", dm: "", msg: "" }
+      let dmSocketId = obj.dm;
+      const data = {
+        nickname: obj.nickname,
+        dm: "(속닥속닥) ",
+        msg: obj.msg,
+      };
+      // Show in receiver client
+      io.to(dmSocketId).emit("newMessage", data);
+      // Show in sender client
+      socket.emit("newMessage", data);
+    } else {
+      /* Send to all */
+      // data : { nickname: "", msg: "" }
+      const data = { nickname: obj.nickname, msg: obj.msg };
+      io.emit("newMessage", data);
+    }
   });
 
   /* When the user gets out from the chat, When browser closed*/

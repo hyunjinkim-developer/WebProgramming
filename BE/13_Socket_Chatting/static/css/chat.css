@@ -46,3 +46,8 @@
 .other-chat div {
   background-color: white;
 }
+
+/* Direct Message */
+.secret-chat div {
+  background-color: pink;
+}
