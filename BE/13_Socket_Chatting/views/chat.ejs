@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat</title>
+
+    <!-- Socket.IO CDN -->
+    <script
+      src="https://cdn.socket.io/4.6.0/socket.io.min.js"
+      integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="stylesheet" href="/static/css/index.css" />
+  </head>
+  <body>
+    <h1>Chatting program with Socket.IO</h1>
+
+    <!-- Show nickname when enters the chat -->
+    <div class="entry-box">
+      <input type="text" id="nickname" , placeholder="Nickname" , autofocus />
+      <button type="button" onclick="entry();">Eenter the chat</button>
+    </div>
+
+    <div class="chat-box display-none">
+      <div id="chat-list" class="chat-list">
+        <!-- Structure of chat data -->
+        <!-- <div class="my-chat">
+          <div>user1: msg1</div>
+        </div>
+        <div class="other-chat">
+          <div>user2: msg2</div>
+        </div> -->
+      </div>
+      <div class="msg-box">
+        <select id="nick-list"></select
+        >에게
+        <input type="text" id="message" />
+        <button type="button" onclick="sendMsg();">전송</button>
+      </div>
+    </div>
+
+    <script src="/static/js/index.js"></script>
+  </body>
+</html>
