@@ -6,22 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chat</title>
 
+    <link rel="stylesheet" href="/static/css/chat.css" />
+
     <!-- Socket.IO CDN -->
     <script
       src="https://cdn.socket.io/4.6.0/socket.io.min.js"
       integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
       crossorigin="anonymous"
     ></script>
-
-    <link rel="stylesheet" href="/static/css/chat.css" />
   </head>
   <body>
     <h1>Chatting program with Socket.IO</h1>
 
     <!-- Show nickname when enters the chat -->
     <div class="entry-box">
-      <input type="text" id="nickname" , placeholder="Nickname" , autofocus />
-      <button type="button" onclick="entry();">Eenter the chat</button>
+      <input type="text" id="nickname" placeholder="Nickname" autofocus />
+      <button type="button" onclick="entry();">Enter the chat</button>
     </div>
 
     <div class="chat-box display-none">

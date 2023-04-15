@@ -23,7 +23,7 @@ function entry() {
 }
 
 /* When user successfully enters the chat */
-socket.on("enterySuccess", (nickname) => {
+socket.on("entrySuccess", (nickname) => {
   /* Set my nickname */
   myNickname = nickname;
 
@@ -65,7 +65,8 @@ function sendMsg() {
   };
   socket.emit("send", data);
 
-  document.querySelector("#message").value = ""; // Clear input tag
+  // Clear input tag
+  document.querySelector("#message").value = "";
 }
 
 socket.on("newMessage", (data) => {
@@ -89,7 +90,7 @@ socket.on("newMessage", (data) => {
     div.classList.add("secret-chat");
     divMsg.textContent = data.dm;
   }
-  // Sent to all && DM
+  // sent to all && DM
   divMsg.textContent += `${data.nickname}: ${data.msg}`;
   div.append(divMsg);
   chatList.append(div);

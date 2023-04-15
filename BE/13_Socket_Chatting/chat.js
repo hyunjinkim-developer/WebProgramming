@@ -53,6 +53,10 @@ io.on("connection", (socket) => {
 
   socket.on("setNickname", (nickname) => {
     /* Check nickname redundancy */
+    // Object.values(nickObj) : returns values in object in array format
+    // array.indexOf(element) :
+    //  returns first index of the element in the array
+    //  -1 if not found
     if (Object.values(nickObj).indexOf(nickname) > -1) {
       // There's already same nickname
       socket.emit(
@@ -63,7 +67,7 @@ io.on("connection", (socket) => {
       nickObj[socket.id] = nickname;
       io.emit("notice", `${nickname} entered.`);
       // When the user successfully enters the chat
-      socket.emit("enterySuccess", nickname);
+      socket.emit("entrySuccess", nickname);
       // Update nickname dictionary
       updateNicknameList();
     }
