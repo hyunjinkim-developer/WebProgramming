@@ -1,5 +1,4 @@
 import Larva from "./Larva";
-import ClassComponent from "../../../02_Component/02_component/src/ClassComponent";
 
 const onClick = () => {
   console.log("Run on Click");
