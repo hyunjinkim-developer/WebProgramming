@@ -7,11 +7,14 @@ function App() {
   };
   return (
     <>
-      <ClassComponent name="Wallace" status="human" funct={funcTest} />
-      <ClassComponent name="Gromit" status="dog" />
-      <ClassComponent name="Penguin" status="penguin" />
+      <ClassComponent name={"Wallace"} status={"human"} func={funcTest} />
+      <ClassComponent name={"Gromit"} status={"dog"} />
+      <ClassComponent name={"Penguin"} status={"penguin"} />
       <ClassComponent />
-      <FunctionalComponenet name="Shaun" status="sheep"></FunctionalComponenet>
+      <FunctionalComponenet
+        name={"Shaun"}
+        status={"sheep"}
+      ></FunctionalComponenet>
       <FunctionalComponenet></FunctionalComponenet>
     </>
   );

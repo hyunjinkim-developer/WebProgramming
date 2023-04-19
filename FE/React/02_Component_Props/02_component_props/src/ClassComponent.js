@@ -16,7 +16,6 @@ class ClassComponent extends React.Component {
     // Destructuring Assignment
     // to access elements of object with variable
     const { name, status } = this.props; // { name: "Wallace", status: "human"}
-    const { counter } = this.state;
 
     // render() is neccessary for ClassComponent
     return (
@@ -40,7 +39,7 @@ class ClassComponent extends React.Component {
 // Careful with the spelling of propTypes
 ClassComponent.propTypes = {
   name: PropTypes.string.isRequired,
-  age: PropTypes.string,
+  status: PropTypes.string,
 };
 
 export default ClassComponent;
