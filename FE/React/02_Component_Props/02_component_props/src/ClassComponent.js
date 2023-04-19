@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 
 class ClassComponent extends React.Component {
   /* class ClassComponent extends Component {}*/
+
   render() {
     // const name = "Gromitt";
 
@@ -15,6 +16,7 @@ class ClassComponent extends React.Component {
     // Destructuring Assignment
     // to access elements of object with variable
     const { name, status } = this.props; // { name: "Wallace", status: "human"}
+    const { counter } = this.state;
 
     // render() is neccessary for ClassComponent
     return (
