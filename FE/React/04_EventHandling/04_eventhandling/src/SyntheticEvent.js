@@ -7,6 +7,7 @@ function SyntheticEvent() {
   }
 
   function printInputValue(event) {
+    // Print with only value that I typed in
     console.log(event.target.value);
   }
 
