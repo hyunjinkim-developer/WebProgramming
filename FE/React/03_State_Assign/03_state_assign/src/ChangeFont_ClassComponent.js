@@ -1,6 +1,6 @@
 import React from "react";
 
-class ChangeFontColor extends React.Component {
+class ChangeFont_ClassComponent extends React.Component {
   state = {
     color: "black",
     text: "검정색 글씨",
@@ -23,6 +23,7 @@ class ChangeFontColor extends React.Component {
     return (
       <>
         <hr></hr>
+        <h1>ChangeFont Class Component</h1>
         <h1 style={{ color: color }}>{text}</h1>
         <button onClick={this.turnRed}>빨간색</button>
         <button onClick={this.turnBlue}>피란색</button>
@@ -31,4 +32,4 @@ class ChangeFontColor extends React.Component {
   }
 }
 
-export default ChangeFontColor;
+export default ChangeFont_ClassComponent;
